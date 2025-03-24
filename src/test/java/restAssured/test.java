@@ -13,8 +13,8 @@ public class test {
     @Test(priority = 0)
     public void authorization(){
         String requestBody = "{\n" +
-                "   \"clientName\": \"Stephy1\",\n" +
-                "   \"clientEmail\": \"stephy1@example.com\"\n" +
+                "   \"clientName\": \"Stephy123\",\n" +
+                "   \"clientEmail\": \"stephy123@example.com\"\n" +
                 "}";
        Response response = RestAssured
                .given()
@@ -35,8 +35,8 @@ public class test {
     @Test(priority = 1)
     public void createAnOrder() {
         String requestBody = "{\n" +
-                "  \"bookId\": 101,\n" +
-                "  \"customerName\": \"Jhonny11\"\n" +
+                "  \"bookId\": 1,\n" +
+                "  \"customerName\": \"John\"\n" +
                 "}";
         Response response = RestAssured
                 .given()
@@ -91,25 +91,25 @@ public class test {
 
     }
 
-//    @Test(priority = 4)
-//    public void getASingleBook() {
-//        Response response = RestAssured
-//                .given()
-//                .baseUri(baseUrl)
-//                .header("Authorization", "Bearer " + token)
-//                .contentType(ContentType.JSON)
-//
-//                .when()
-//                .get("/books/")
-//
-//                .then()
-//                .statusCode(200)
-//                .extract().response();
-//        System.out.println(response.getBody().asString());
-//    }
-
-
     @Test(priority = 4)
+    public void getASingleBook() {
+        Response response = RestAssured
+                .given()
+                .baseUri(baseUrl)
+                .header("Authorization", "Bearer " + token)
+                .contentType(ContentType.JSON)
+
+                .when()
+                .get("/books/1")
+
+                .then()
+                .statusCode(200)
+                .extract().response();
+        System.out.println(response.getBody().asString());
+    }
+
+
+    @Test(priority = 5)
     public void getAllOrders() {
         Response response = RestAssured
                 .given()
