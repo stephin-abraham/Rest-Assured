@@ -10,12 +10,14 @@ public class test {
     public static String baseUrl = "https://simple-books-api.glitch.me";
     public static String token = " ";
     public static String orderId = " ";
+    public static String resBody = " ";
+
 
     @Test(enabled = true,priority = 0)
     public void authorization(){
         String requestBody = "{\n" +
-                "   \"clientName\": \"Stephy98765\",\n" +
-                "   \"clientEmail\": \"stephy98765@example.com\"\n" +
+                "   \"clientName\": \"Stephy\",\n" +
+                "   \"clientEmail\": \"stephy0123456789@example.com\"\n" +
                 "}";
        Response response = RestAssured
                .given()
@@ -52,11 +54,12 @@ public class test {
                 .then()
                 .statusCode(201)
                 .extract().response();
-
-        System.out.println(response.getBody().asString());
+        System.out.print(response.getBody().asString());
+        orderId =response.jsonPath().getString("orderId");
+        System.out.println(orderId);
     }
 
-    @Test(enabled = false,priority = 2)
+    @Test(enabled = true,priority = 2)
     public void getStatus() {
         Response response = RestAssured
                 .given()
@@ -73,7 +76,7 @@ public class test {
         System.out.println(response.getBody().asString());
     }
 
-    @Test(enabled = false,priority = 3)
+    @Test(enabled = true,priority = 3)
     public void getListOfBooks() {
         Response response = RestAssured
                 .given()
@@ -91,7 +94,7 @@ public class test {
 
     }
 
-    @Test(enabled = false,priority = 4)
+    @Test(enabled = true,priority = 4)
     public void getASingleBook() {
         Response response = RestAssured
                 .given()
@@ -127,7 +130,7 @@ public class test {
     }
 
 
-    @Test(enabled = false, priority = 6)
+    @Test(enabled = true, priority = 6)
     public void updateAnOrder() {
         String requestBody = "{\n" +
                 "  \"customerName\": \"Steph\"\n" +
@@ -140,13 +143,53 @@ public class test {
                 .contentType(ContentType.JSON)
 
                 .when()
-                .patch("/orders/" +orderId)
+                .patch("/orders/"+orderId)
 
                 .then()
-                .statusCode(201)
+                .statusCode(204)
                 .extract().response();
-        orderId= response.jsonPath().getString("orderId");
-        System.out.println(orderId);
+
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+
+    @Test(enabled = true, priority = 7)
+    public void getUpdatedOrder() {
+        Response response = RestAssured
+                .given()
+                .baseUri(baseUrl)
+                .header("Authorization", "Bearer " + token)
+                .contentType(ContentType.JSON)
+
+                .when()
+                .get("/orders/"+orderId)
+
+                .then()
+                .statusCode(200)
+                .extract().response();
+
+        System.out.println("Response Status Code: " + response.getStatusCode());
+       resBody=  response.getBody().asString();
+       System.out.println("Response Body content is :" +resBody);
+    }
+    @Test(enabled = true, priority = 8)
+    public void deleteAnOrder() {
+
+        Response response = RestAssured
+                .given()
+                .baseUri(baseUrl)
+                .header("Authorization", "Bearer " + token)
+                .contentType(ContentType.JSON)
+
+                .when()
+                .delete("/orders/"+orderId)
+
+                .then()
+                .statusCode(204)
+                .extract().response();
+
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + response.getBody().asString());
     }
 }
 
