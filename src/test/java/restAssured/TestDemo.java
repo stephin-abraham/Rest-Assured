@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 
-public class test {
+public class TestDemo {
     public static String baseUrl = "https://simple-books-api.glitch.me";
     public static String token = " ";
     public static String orderId = " ";

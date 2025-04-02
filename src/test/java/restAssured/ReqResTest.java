@@ -5,7 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
-public class reQres {
+public class ReqResTest {
     public static String baseUrl = "https://reqres.in";
     public static String contentBody = " ";
     public static String tokenId = " ";
