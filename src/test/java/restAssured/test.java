@@ -17,7 +17,7 @@ public class test {
     public void authorization(){
         String requestBody = "{\n" +
                 "   \"clientName\": \"Stephy\",\n" +
-                "   \"clientEmail\": \"stephy0123456789@example.com\"\n" +
+                "   \"clientEmail\": \"stephy0123456d789@example.com\"\n" +
                 "}";
        Response response = RestAssured
                .given()
