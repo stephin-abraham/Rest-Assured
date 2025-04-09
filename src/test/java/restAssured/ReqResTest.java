@@ -2,8 +2,14 @@ package restAssured;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.internal.path.json.mapping.JsonObjectDeserializer;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 import org.testng.annotations.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+import org.json.simple.JSONValue;
 
 public class ReqResTest {
     public static String baseUrl = "https://reqres.in";
@@ -205,5 +211,29 @@ public class ReqResTest {
                 .extract().response();
 
         System.out.println("The unsuccessful register status code is "+response.getStatusCode());
+    }
+    @Test
+    public void post(){
+
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("name", "Stephin");
+//        map.put("proffession","Software Test Engineer");
+//        System.out.println(map);
+
+        JSONObject req = new JSONObject();
+        req.put("name", "Stephin");
+        req.put("proffession","Software Test Engineer");
+        System.out.println(req.toString());
+
+        RestAssured
+                .given()
+                .header("Content-Type","application/json")
+                .accept(ContentType.JSON)
+                .body(req.toString())
+                .when()
+                .post("https://reqres.in/api/users")
+                .then()
+                .statusCode(201);
+
     }
 }
