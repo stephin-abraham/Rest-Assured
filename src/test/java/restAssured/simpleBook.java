@@ -110,5 +110,20 @@ public class simpleBook {
 
         System.out.println(res.body().asString());
     }
+    @Test(priority = 5)
+    public void deleteAnOrder(){
+       Response res = given()
+               .baseUri(baseUrl)
+               .contentType(ContentType.JSON)
+               .header("Authorization", "Bearer " + token)
+
+               .when()
+               .delete("/orders/" +orderId)
+
+               .then()
+               .statusCode(204)
+               .extract().response();
+        System.out.println(res.getStatusCode());
+    }
 
 }
