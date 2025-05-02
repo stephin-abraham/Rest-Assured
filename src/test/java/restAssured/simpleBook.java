@@ -16,7 +16,7 @@ public class simpleBook {
     public void auth(){
         String bodyCont = "{\n" +
                 "   \"clientName\": \"123steph\",\n" +
-                "   \"clientEmail\": \"512345Steph1234@gamil.com\"\n" +
+                "   \"clientEmail\": \"65123456Steph1234@gamil.com\"\n" +
                 "}";
       Response res = given()
               .baseUri(baseUrl)
@@ -89,5 +89,21 @@ public class simpleBook {
                 .extract().response();
         System.out.println("Response Status Code: " + res.getStatusCode());
         System.out.println("The updated content is "+updatedBody);
+    }
+
+    @Test(priority = 4)
+    public void getAllOrders(){
+        Response res = given()
+                .baseUri(baseUrl)
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer "+token)
+                .when()
+                .get("/orders")
+
+                .then()
+                .statusCode(200)
+                .extract().response();
+
+        System.out.println(res.body().asString());
     }
 }
