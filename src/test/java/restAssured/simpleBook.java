@@ -4,6 +4,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
+import java.util.UUID;
+
 import static io.restassured.RestAssured.*;
 
 public class simpleBook {
@@ -14,9 +16,10 @@ public class simpleBook {
 
     @Test(priority = 0)
     public void auth(){
+        String randomEmail = "steph_" + UUID.randomUUID().toString().substring(0, 8) + "@gmail.com";
         String bodyCont = "{\n" +
                 "   \"clientName\": \"123steph\",\n" +
-                "   \"clientEmail\": \"65123456Steph1234@gamil.com\"\n" +
+                "   \"clientEmail\": \""+randomEmail+"\"\n" +
                 "}";
       Response res = given()
               .baseUri(baseUrl)
@@ -31,6 +34,7 @@ public class simpleBook {
               .extract().response();
 
       token = res.jsonPath().getString("accessToken");
+      System.out.println(randomEmail);
       System.out.println(token);
     }
 
@@ -106,4 +110,5 @@ public class simpleBook {
 
         System.out.println(res.body().asString());
     }
+
 }
